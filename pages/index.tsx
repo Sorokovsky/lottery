@@ -10,7 +10,7 @@ class Index extends Component<IProps, IState> {
     render():ReactNode{
       return(
         <MainLoyout title={"Створити лотерею для розіграшу"}>
-          <p>hi</p>
+          
         </MainLoyout>
       )
     }
