@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, ReactNode } from "react";
 interface IProps {
   t:string;
 };
@@ -8,11 +8,9 @@ class Index extends Component<IProps, IState> {
       super(props);
       this.state = {};
     }
-    render():JSX.Element{
+    render():ReactNode{
       return(
-        <>
-        Hello
-        </>
+        <h1>he</h1>
       )
     }
 }
