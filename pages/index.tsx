@@ -1,4 +1,5 @@
 import { Component, ReactNode } from "react";
+import MainLoyout from "../layouts/MainLoyout";
 interface IProps {};
 interface IState {};
 class Index extends Component<IProps, IState> {
@@ -8,7 +9,9 @@ class Index extends Component<IProps, IState> {
     }
     render():ReactNode{
       return(
-        <h1>he</h1>
+        <MainLoyout title={"Створити лотерею для розіграшу"}>
+          <p>hi</p>
+        </MainLoyout>
       )
     }
 }
