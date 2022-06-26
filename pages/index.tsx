@@ -1,7 +1,5 @@
 import { Component, ReactNode } from "react";
-interface IProps {
-  t:string;
-};
+interface IProps {};
 interface IState {};
 class Index extends Component<IProps, IState> {
     constructor(props: IProps){
