@@ -1,5 +1,7 @@
-import { Component } from "react";
-interface IProps{};
+import { Component, ReactNode } from "react";
+interface IProps{
+    children: ReactNode;
+};
 interface IState{};
 class MyForm extends Component<IProps, IState>{
     constructor(props: IProps){
@@ -8,7 +10,7 @@ class MyForm extends Component<IProps, IState>{
     render():JSX.Element{
         return(
             <form action="#">
-                
+                {this.props.children}
             </form>
         );
     }
