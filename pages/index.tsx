@@ -1,5 +1,6 @@
 import { Component } from "react";
 import MainLoyout from "../layouts/MainLoyout";
+import { usersStore } from "../store/users";
 interface IProps {};
 interface IState {};
 class Index extends Component<IProps, IState> {
