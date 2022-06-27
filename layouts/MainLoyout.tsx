@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Component, ReactNode, Fragment } from "react";
-import Footer from "../components/Footer";
 import cl from '../styles/MainLoyout.module.scss';
 interface IProps{
     title:string;
@@ -25,7 +24,6 @@ class MainLoyout extends Component<IProps, IState>{
                     <main className={[cl.main].join(" ")}>
                         {this.props.children}
                     </main>
-                    <Footer />
                 </div>
             </Fragment>
         )

@@ -1,3 +1,6 @@
+export interface IUser{
+    
+}
 class UsersStore{
 
 }

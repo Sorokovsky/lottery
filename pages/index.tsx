@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import { Component } from "react";
 import MainLoyout from "../layouts/MainLoyout";
 interface IProps {};
 interface IState {};
@@ -7,7 +7,7 @@ class Index extends Component<IProps, IState> {
       super(props);
       this.state = {};
     }
-    render():ReactNode{
+    render():JSX.Element{
       return(
         <MainLoyout title={"Створити лотерею для розіграшу"}>
           
