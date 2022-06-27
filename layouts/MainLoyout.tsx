@@ -20,11 +20,7 @@ class MainLoyout extends Component<IProps, IState>{
                     <meta name="description" content={this.props.description} />
                     <meta name="keywords" content={this.props.keywords ? this.props.keywords.join(",") : ""}/>
                 </Head>
-                <div className={[cl.wrapper].join(" ")}>
-                    <main className={[cl.main].join(" ")}>
-                        {this.props.children}
-                    </main>
-                </div>
+                    {this.props.children}
             </Fragment>
         )
     }

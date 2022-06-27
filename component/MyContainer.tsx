@@ -1,19 +1,19 @@
 import { Component, ReactNode } from "react";
-import cl from '../styles/MyForm.module.scss';
+import cl from '../styles/MyContainer.module.scss';
 interface IProps{
     children: ReactNode;
 };
 interface IState{};
-class MyForm extends Component<IProps, IState>{
+class MyContainer extends Component<IProps, IState>{
     constructor(props: IProps){
         super(props);
     }
     render():JSX.Element{
         return(
-            <form action="#" className={[cl.form].join(" ")}>
+            <div className={[cl.container].join(" ")}>
                 {this.props.children}
-            </form>
-        );
+            </div>
+        )
     }
 }
-export default MyForm;
+export default MyContainer;
