@@ -3,7 +3,7 @@ import { methods } from '../types/methods';
 interface Props{
     children:ReactNode;
     action?:string;
-    method?:string;
+    method?:methods;
 }
 const MyForm:FC<Props> = ({children, action = '#', method = methods.GET}:Props):JSX.Element => {
   return (
