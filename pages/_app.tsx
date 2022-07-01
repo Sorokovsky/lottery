@@ -1,8 +1,9 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
+import App from 'next/app';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps):JSX.Element => {
   return <Component {...pageProps} />
 }
 
-export default MyApp
+export default MyApp;
