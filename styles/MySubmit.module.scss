@@ -1,15 +1,12 @@
-.input{
-    display: none;    
-}
 .btn{
     cursor: pointer;
     padding: 10rem 10rem;
-    background-color: rgba(21, 69, 201, 0.823);
+    background-color: rgba(57, 193, 59, 0.823);
     border: 1rem solid transparent;
     color: #ffffff;
     font-weight: 700;
     transition: .3s all linear;
     &:hover{
-        background-color: rgba(21, 69, 201, 1);
+        background-color: rgba(57, 193, 59, 1);
     }
 }

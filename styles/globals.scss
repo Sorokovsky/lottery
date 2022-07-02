@@ -13,6 +13,10 @@ html{
 }
 .flex{
     display: flex;
+    margin-top: 10rem;
     align-items: center;
     justify-content: space-between;
+}
+button{
+    border-radius: 5rem;
 }

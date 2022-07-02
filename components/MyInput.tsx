@@ -6,7 +6,7 @@ interface Props{
     placeholder?: string;
     name?: string;
     id?:string;
-}
+};
 const MyInput:FC<Props> = ({type = InputType.TEXT, 
                             placeholder = "", 
                             name = "", 
