@@ -11,6 +11,10 @@ const MyInput:FC<Props> = ({type = InputType.TEXT,
                             placeholder = "", 
                             name = "", 
                             id = ""}:Props):JSX.Element => {
-    return <input type={type} placeholder={placeholder} name={name} id={id}/>
+    return <input type={type}
+                  placeholder={placeholder} 
+                  name={name} 
+                  id={id}
+                  className={[cl.input].join(" ")}/>
 }
 export default MyInput;
