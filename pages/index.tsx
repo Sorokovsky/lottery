@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
 import { NextRouter, useRouter } from 'next/router';
 import React from 'react';
@@ -8,13 +9,15 @@ import MyInput from '../components/MyInput';
 import MySubmit from '../components/MySubmit';
 import UserStore from '../store/UserStore';
 import { InputType } from '../types/inputType';
-const Home:NextPage = ():JSX.Element => {
+const Home:NextPage = observer(():JSX.Element => {
   const router:NextRouter = useRouter();
   const createLottery = (e:React.FormEvent<HTMLFormElement>):void => {
     e.preventDefault();
     const count:number = +e.currentTarget.count.value;
-    UserStore.setCount(count);
-    router.push({pathname:'users'});
+    if(count >= 0){
+      UserStore.setCount(count);
+      router.push({pathname:'users'});
+    }
   }
   return (
    <Container>
@@ -29,5 +32,5 @@ const Home:NextPage = ():JSX.Element => {
     </MyForm>
    </Container>
   )
-}
+})
 export default Home;
