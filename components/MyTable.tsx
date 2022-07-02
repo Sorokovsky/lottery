@@ -1,13 +1,12 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, ReactNode } from "react";
+import UserStore from "../store/UserStore";
 import { UserType } from "../types/UserType";
-interface Props{
-    users:UserType;
-    children:ReactNode;
-};
-const MyTable:FC<Props> = observer(():JSX.Element => {
+const MyTable:FC = observer(():JSX.Element => {
     return (
-        <table></table>
+        <table>{UserStore.users.length !== 0 
+            ? UserStore.users.map((user:UserType) => <tr><td>f</td></tr>) 
+            : ''}</table>
     )
 })
 export default MyTable;
