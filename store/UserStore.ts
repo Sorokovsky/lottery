@@ -16,5 +16,8 @@ class UserStore{
         const index = useRandom(0, this.users.length - 1);
         return `${index + 1}. ${this.users[index].name}`;
     }
+    setCount(length:number):void{
+        this.users.length = length;
+    }
 }
 export default new UserStore();
