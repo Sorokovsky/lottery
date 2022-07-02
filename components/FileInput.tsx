@@ -5,8 +5,13 @@ interface Props{
     placeholder: string;
     accept?:string;
     multi?: boolean;
+    change?: (e:React.ChangeEvent<HTMLInputElement>) => void;
 };
-const FileInput:FC<Props> = ({placeholder, accept = '', multi = false}:Props):JSX.Element => {
+const FileInput:FC<Props> = ({
+    placeholder, 
+    accept = '', 
+    multi = false,
+    change = (e) => e.preventDefault()}:Props):JSX.Element => {
     const inputRef = useRef<HTMLInputElement>(null);
     const clickHandler = (e:React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>):void => {
         if(null !== inputRef.current){
@@ -15,7 +20,7 @@ const FileInput:FC<Props> = ({placeholder, accept = '', multi = false}:Props):JS
     }
     return(
         <>
-        <input ref={inputRef} className={[cl.input].join(" ")} accept={accept} multiple={multi} type={InputType.FILE} />
+        <input onChange={change} ref={inputRef} className={[cl.input].join(" ")} accept={accept} multiple={multi} type={InputType.FILE} />
         <button type="button" className={[cl.btn].join(" ")} onClick={clickHandler}>{placeholder}</button>
         </>
     )

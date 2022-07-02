@@ -9,7 +9,12 @@ html{
 #__next{
     display: flex;
     justify-content: center;
-    padding-top: 50rem;
+    align-items: center;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 .flex{
     display: flex;
@@ -20,6 +25,21 @@ html{
 button{
     border-radius: 5rem;
 }
+button, input{
+    &:focus-within{
+        outline: none;
+    }
+}
 table{
+    width: 100%;
     font-size: 25rem;
+}
+@media screen and (max-width: 394px) {
+    .flex{
+        flex-direction: column;
+        gap: 10rem;
+        *{
+            width: 100%;
+        }
+    }
 }
