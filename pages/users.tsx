@@ -9,10 +9,9 @@ const Users:NextPage = observer(():JSX.Element => {
     const router:NextRouter = useRouter()
     useEffect(() => {
         if(UserStore.users.length <= 0){
-            router.push('./');
-            return;
+            router.push('/');
         }
-    }, []);
+    }, [])
     return(
         <Container>
            <MyTable />
