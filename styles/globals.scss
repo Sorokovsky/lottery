@@ -26,9 +26,11 @@ html{
     font-size: 42rem;
     font-weight: bold;
     position: fixed;
-    right: 30rem;
+    z-index: 100;
+    right: 5rem;
+    color: red;
     cursor: pointer;
-    top: 10rem;
+    top: 5rem;
     transform: rotate(45deg);
 }
 button{

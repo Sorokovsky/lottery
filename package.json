@@ -2,13 +2,17 @@
   "name": "randomizer",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sorokovsky.github.io/lottery/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "gh-pages -d .next",
+    "predeploy": "npm run build"
   },
   "dependencies": {
+    "gh-pages": "^4.0.0",
     "mobx": "^6.6.1",
     "mobx-react-lite": "^3.4.0",
     "next": "12.2.0",
