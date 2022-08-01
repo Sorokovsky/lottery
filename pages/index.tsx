@@ -29,15 +29,17 @@ const Home:NextPage = observer(():JSX.Element => {
   }
   return (
    <Container>
-    <MyForm submit={createLottery}>
-      <MyInput type={InputType.NUMBER} 
-               placeholder={"Оберіть кількість учасників"}
-               name="count"/>
-      <div className='flex'>
-        <FileInput change={setBg} accept='image/*' placeholder='Завантажити задній фон' />
-        <MySubmit placeholder='Створити лотерею' />
-      </div>
-    </MyForm>
+    <div className="table" style={{height: "auto", padding: "15rem", paddingTop: "15rem"}}>
+      <MyForm submit={createLottery}>
+        <MyInput type={InputType.NUMBER}
+                 placeholder={"Оберіть кількість учасників"}
+                 name="count"/>
+        <div className='flex'>
+          <FileInput change={setBg} accept='image/*' placeholder='Завантажити задній фон' />
+          <MySubmit placeholder='Створити лотерею' />
+        </div>
+      </MyForm>
+    </div>
    </Container>
   )
 })

@@ -1,0 +1,32 @@
+.flex{
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border: unset;
+}
+.text{
+    font-size: 28rem;
+    text-align: center;
+}
+.btn{
+    cursor: pointer;
+    padding: 10rem 10rem;
+    background-color: rgba(57, 193, 59, 0.823);
+    border: 1rem solid transparent;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 20rem;
+    transition: .3s all linear;
+    &:hover{
+        background-color: rgba(57, 193, 59, 1);
+    }
+}
+@media screen and (max-width: 526px) {
+    .flex{
+        flex-direction: column;
+        gap: 15rem;
+    }
+}
