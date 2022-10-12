@@ -68,6 +68,12 @@ button, input{
     overflow: hidden;
     transition: .3s all linear;
 }
+.text{
+    position: fixed;
+    top: 10rem;
+    left: 10rem;
+    cursor: pointer;
+}
 .open{
     height: auto;
 }

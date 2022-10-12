@@ -3,6 +3,7 @@ import { useRandom } from "../hooks/useRandom";
 import { UserType } from "../types/UserType";
 class UserStore{
     users:UserType[] = [];
+    text:string = "";
     constructor(){
         makeAutoObservable(this);
     }
@@ -25,5 +26,16 @@ class UserStore{
             this.users[index] = {name: ''};
         }
     }
+    strToJSON(string:string){
+        const arr:UserType[] = [];
+        const template = new RegExp(/\d+.\W+/gim);
+        let rows:RegExpMatchArray | null = string.trim().match(template);
+        if (rows){
+            rows.forEach((el, index) => {
+                arr[index] = {name: el.split(".")[1].trim()};
+            });
+        }
+        this.users = arr;
+      }
 }
 export default new UserStore();

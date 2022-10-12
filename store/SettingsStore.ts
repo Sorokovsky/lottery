@@ -11,5 +11,6 @@ class SettingsStore{
             renderBg();
         });
     }
+    popubIsOpen:boolean = false;
 }
 export default new SettingsStore();
