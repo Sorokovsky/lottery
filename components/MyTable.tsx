@@ -20,7 +20,7 @@ const MyTable:FC = observer(():JSX.Element => {
                             <div>
                                 <input
                                 type="text"
-                                placeholder={user.name}
+                                value={user.name}
                                 onChange={(e:React.ChangeEvent<HTMLInputElement>):void => {
                                     UserStore.changeUser(e.target.value, index);
                                 }}
