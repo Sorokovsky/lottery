@@ -28,7 +28,7 @@ class UserStore{
     }
     strToJSON(string:string){
         const arr:UserType[] = [];
-        const template = new RegExp(/\d+.\W+/gim);
+        const template = new RegExp(/\d+.\D+/gim);
         let rows:RegExpMatchArray | null = string.trim().match(template);
         if (rows){
             rows.forEach((el, index) => {
