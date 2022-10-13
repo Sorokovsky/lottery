@@ -7,9 +7,9 @@ const MyPopub:FC = observer(():JSX.Element => {
     const input = useRef<HTMLTextAreaElement>(null);
     return <div className={[cl.popub, 
             SettingsStore.popubIsOpen? cl.open: ""].join(" ")}>
-        <textarea ref={input}></textarea>
+        {SettingsStore.popubIsOpen && <textarea defaultValue={UserStore.text} ref={input}></textarea>}
         <button onClick={() => {
-            UserStore.strToJSON(input!.current!.value);
+            UserStore.parse(input!.current!.value);
             SettingsStore.popubIsOpen = false;
         }}>Зберегти</button>
     </div>
