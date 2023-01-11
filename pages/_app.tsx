@@ -6,6 +6,7 @@ const MyApp = ({ Component, pageProps }: AppProps):JSX.Element => {
     <>
     <Head>
       <title>Розіграж</title>
+      <link rel="manifest" href="./manifest.json" />
     </Head>
     <Component {...pageProps} />
     </>
