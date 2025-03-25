@@ -1,6 +1,16 @@
 package org.sorokovsky.lottery.config;
 
+import org.sorokovsky.lottery.configurer.JwtConfigurer;
+import org.sorokovsky.lottery.deserializer.DefaultAccessTokenDeserializer;
+import org.sorokovsky.lottery.deserializer.DefaultRefreshTokenDeserializer;
+import org.sorokovsky.lottery.factory.DefaultAccessTokenFactory;
+import org.sorokovsky.lottery.factory.DefaultRefreshTokenFactory;
+import org.sorokovsky.lottery.repository.DefaultAccessTokenRepository;
+import org.sorokovsky.lottery.repository.DefaultRefreshTokenRepository;
+import org.sorokovsky.lottery.serializer.DefaultAccessTokenSerializer;
+import org.sorokovsky.lottery.serializer.DefaultRefreshTokenSerializer;
 import org.sorokovsky.lottery.service.LotteryUserDetailService;
+import org.sorokovsky.lottery.strategy.JwtSessionStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +33,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager(
+    public DefaultAccessTokenRepository accessTokenRepository(
+            DefaultAccessTokenSerializer accessTokenSerializer,
+            DefaultAccessTokenDeserializer accessTokenDeserializer
+    ) {
+        return new DefaultAccessTokenRepository(accessTokenSerializer, accessTokenDeserializer);
+    }
+
+    @Bean
+    public DefaultRefreshTokenRepository refreshTokenRepository(
+            DefaultRefreshTokenSerializer refreshTokenSerializer,
+            DefaultRefreshTokenDeserializer refreshTokenDeserializer
+    ) {
+        return new DefaultRefreshTokenRepository(refreshTokenSerializer, refreshTokenDeserializer);
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
             PasswordEncoder passwordEncoder,
             LotteryUserDetailService userDetailsService
     ) {
@@ -34,19 +60,32 @@ public class SecurityConfig {
     }
 
     @Bean
+    public JwtSessionStrategy jwtSessionStrategy(
+            DefaultAccessTokenRepository accessTokenRepository,
+            DefaultRefreshTokenRepository refreshTokenRepository) {
+        return new JwtSessionStrategy(accessTokenRepository, refreshTokenRepository, new DefaultAccessTokenFactory(), new DefaultRefreshTokenFactory());
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager,
+            DefaultAccessTokenRepository accessTokenRepository,
+            JwtSessionStrategy jwtSessionStrategy
     ) throws Exception {
+        var jwtConfigurer = new JwtConfigurer(authenticationManager, accessTokenRepository);
+        http.apply(jwtConfigurer);
         return http
-                .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/v3/**", "/swagger-ui/**").permitAll();
-                    request.anyRequest().authenticated();
-                })
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .authenticationManager(authenticationManager)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(x -> x
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .addSessionAuthenticationStrategy(jwtSessionStrategy)
+                )
                 .build();
     }
 }
