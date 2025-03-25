@@ -5,6 +5,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
+    url: jdbc:postgresql://localhost:5430/lottery
   jpa:
     show-sql: true
     hibernate:
