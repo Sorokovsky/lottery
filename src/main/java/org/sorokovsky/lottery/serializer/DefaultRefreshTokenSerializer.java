@@ -14,7 +14,7 @@ public class DefaultRefreshTokenSerializer extends AbstractJwtSerializer {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRefreshTokenSerializer.class);
     private final JWEEncrypter encrypter;
     private JWEAlgorithm algorithm = JWEAlgorithm.DIR;
-    private EncryptionMethod encryptionMethod;
+    private EncryptionMethod encryptionMethod = EncryptionMethod.A192CBC_HS384;
 
     @Override
     public String apply(Token token) {
