@@ -1,0 +1,17 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:16
+    container_name: lottery_database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lottery
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5430:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/pgdata
+volumes:
+  pgdata:
+    driver: local

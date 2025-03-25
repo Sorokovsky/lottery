@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: lottery
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
