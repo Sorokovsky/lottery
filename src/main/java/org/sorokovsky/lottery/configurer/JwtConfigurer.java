@@ -1,6 +1,5 @@
 package org.sorokovsky.lottery.configurer;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,6 @@ public class JwtConfigurer implements SecurityConfigurer<DefaultSecurityFilterCh
         var bearerAuthorizationConverter = new BearerAuthorizationTokenConverter(tokenRepository);
         var authenticationFilter = new AuthenticationFilter(authenticationManager, bearerAuthorizationConverter);
         authenticationFilter.setSuccessHandler((request, response, authentication) -> {
-            response.setStatus(HttpServletResponse.SC_OK);
         });
         builder.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
