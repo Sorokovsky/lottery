@@ -45,7 +45,9 @@ public class AuthService {
     public Optional<UserEntity> register(RegisterUser user, HttpServletRequest request, HttpServletResponse response) {
         var existingUser = usersService.existsByEmail(user.email());
         if (existingUser) return Optional.empty();
-        var createdUser = usersService.create(new UserEntity(user.email(), user.password()));
+        var userEntity = UserEntity.builder().email(user.email()).password(user.password()).build();
+        System.out.println(userEntity);
+        var createdUser = usersService.create(userEntity);
         authenticate(new LoginUser(user.email(), user.password()), request, response);
         return Optional.ofNullable(createdUser);
 
