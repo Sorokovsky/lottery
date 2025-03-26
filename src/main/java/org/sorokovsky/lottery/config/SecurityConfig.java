@@ -30,6 +30,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 @Configuration
 @EnableWebSecurity(debug = true)
 public class SecurityConfig {
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
