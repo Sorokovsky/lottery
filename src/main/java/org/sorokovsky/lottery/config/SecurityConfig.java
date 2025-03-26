@@ -83,7 +83,13 @@ public class SecurityConfig {
         http.apply(jwtConfigurer);
         return http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/refresh-tokens", "/auth/login", "/v3/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers(
+                                "/auth/refresh-tokens",
+                                "/auth/register",
+                                "/auth/login",
+                                "/v3/**",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationManager(authenticationManager)

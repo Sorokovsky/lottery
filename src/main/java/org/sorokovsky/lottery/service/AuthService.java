@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.sorokovsky.lottery.contract.LoginUser;
+import org.sorokovsky.lottery.contract.RegisterUser;
+import org.sorokovsky.lottery.entity.UserEntity;
 import org.sorokovsky.lottery.factory.DefaultAccessTokenFactory;
 import org.sorokovsky.lottery.factory.RefreshTokenRecreateFactory;
 import org.sorokovsky.lottery.repository.DefaultAccessTokenRepository;
@@ -14,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +40,15 @@ public class AuthService {
         var newRefreshToken = refreshTokenRecreateFactory.apply(refreshToken);
         refreshTokenRepository.set(newRefreshToken, response);
         return true;
+    }
+
+    public Optional<UserEntity> register(RegisterUser user, HttpServletRequest request, HttpServletResponse response) {
+        var existingUser = usersService.existsByEmail(user.email());
+        if (existingUser) return Optional.empty();
+        var createdUser = usersService.create(new UserEntity(user.email(), user.password()));
+        authenticate(new LoginUser(user.email(), user.password()), request, response);
+        return Optional.ofNullable(createdUser);
+
     }
 
     public boolean login(LoginUser user, HttpServletRequest request, HttpServletResponse response) {
