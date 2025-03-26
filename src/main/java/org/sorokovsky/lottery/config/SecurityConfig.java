@@ -6,6 +6,7 @@ import org.sorokovsky.lottery.deserializer.DefaultRefreshTokenDeserializer;
 import org.sorokovsky.lottery.factory.DefaultAccessTokenFactory;
 import org.sorokovsky.lottery.factory.DefaultRefreshTokenFactory;
 import org.sorokovsky.lottery.filter.EmailPasswordFilter;
+import org.sorokovsky.lottery.provider.BearerTokenProvider;
 import org.sorokovsky.lottery.repository.DefaultAccessTokenRepository;
 import org.sorokovsky.lottery.repository.DefaultRefreshTokenRepository;
 import org.sorokovsky.lottery.serializer.DefaultAccessTokenSerializer;
@@ -25,6 +26,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -53,12 +55,15 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(
             PasswordEncoder passwordEncoder,
-            LotteryUserDetailService userDetailsService
+            LotteryUserDetailService userDetailsService,
+            BearerTokenProvider bearerTokenProvider
     ) {
         var provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
         provider.setUserDetailsService(userDetailsService);
-        return new ProviderManager(provider);
+        var preAuthenticationProvider = new PreAuthenticatedAuthenticationProvider();
+        preAuthenticationProvider.setPreAuthenticatedUserDetailsService(bearerTokenProvider);
+        return new ProviderManager(provider, preAuthenticationProvider);
     }
 
     @Bean
