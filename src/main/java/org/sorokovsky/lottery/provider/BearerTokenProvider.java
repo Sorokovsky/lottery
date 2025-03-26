@@ -19,5 +19,6 @@ public class BearerTokenProvider implements AuthenticationUserDetailsService<Pre
         var exception = new UsernameNotFoundException("Username not found");
         if (!(authenticationToken.getPrincipal() instanceof Token token)) throw exception;
         return userDetailsService.loadUserByUsername(token.email());
+
     }
 }

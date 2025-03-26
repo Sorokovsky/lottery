@@ -9,6 +9,7 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jose.jwk.OctetSequenceKey;
 import org.sorokovsky.lottery.deserializer.DefaultAccessTokenDeserializer;
 import org.sorokovsky.lottery.deserializer.DefaultRefreshTokenDeserializer;
+import org.sorokovsky.lottery.factory.DefaultAccessTokenFactory;
 import org.sorokovsky.lottery.serializer.DefaultAccessTokenSerializer;
 import org.sorokovsky.lottery.serializer.DefaultRefreshTokenSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,11 @@ public class TokensConfig {
                         OctetSequenceKey.parse(refreshTokenKey)
                 )
         );
+    }
+
+    @Bean
+    public DefaultAccessTokenFactory defaultAccessTokenFactory() {
+        return new DefaultAccessTokenFactory();
     }
 
     @Bean

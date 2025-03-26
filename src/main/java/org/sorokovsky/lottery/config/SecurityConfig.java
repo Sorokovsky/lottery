@@ -3,9 +3,9 @@ package org.sorokovsky.lottery.config;
 import org.sorokovsky.lottery.configurer.JwtConfigurer;
 import org.sorokovsky.lottery.deserializer.DefaultAccessTokenDeserializer;
 import org.sorokovsky.lottery.deserializer.DefaultRefreshTokenDeserializer;
+import org.sorokovsky.lottery.entrypoints.UnauthorizedEntryPoint;
 import org.sorokovsky.lottery.factory.DefaultAccessTokenFactory;
 import org.sorokovsky.lottery.factory.DefaultRefreshTokenFactory;
-import org.sorokovsky.lottery.filter.EmailPasswordFilter;
 import org.sorokovsky.lottery.provider.BearerTokenProvider;
 import org.sorokovsky.lottery.repository.DefaultAccessTokenRepository;
 import org.sorokovsky.lottery.repository.DefaultRefreshTokenRepository;
@@ -25,7 +25,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 @Configuration
@@ -84,16 +83,18 @@ public class SecurityConfig {
         http.apply(jwtConfigurer);
         return http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/login", "/v3/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/auth/refresh-tokens", "/auth/login", "/v3/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationManager(authenticationManager)
-                .csrf(x -> x.ignoringRequestMatchers("/auth/login", "/v3/**", "/swagger-ui/**"))
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(x -> x
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .addSessionAuthenticationStrategy(jwtSessionStrategy)
                 )
-                .addFilterBefore(new EmailPasswordFilter(authenticationManager, jwtSessionStrategy), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(config -> config
+                        .authenticationEntryPoint(new UnauthorizedEntryPoint()))
                 .build();
     }
 }
