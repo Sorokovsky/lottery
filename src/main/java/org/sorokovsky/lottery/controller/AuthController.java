@@ -3,6 +3,7 @@ package org.sorokovsky.lottery.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.sorokovsky.lottery.contract.ApiError;
 import org.sorokovsky.lottery.contract.GetUser;
 import org.sorokovsky.lottery.contract.LoginUser;
 import org.sorokovsky.lottery.contract.RegisterUser;
@@ -23,13 +24,15 @@ public class AuthController {
     public ResponseEntity<?> refreshTokens(HttpServletRequest request, HttpServletResponse response) {
         var success = authService.refreshTokens(request, response);
         if (success) return ResponseEntity.noContent().build();
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Refresh tokens failed");
+        var apiError = new ApiError("Refresh tokens failed", HttpStatus.FORBIDDEN.value());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiError);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterUser user, HttpServletRequest request, HttpServletResponse response) {
         var created = authService.register(user, request, response);
-        if (created.isEmpty()) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User already exists");
+        var apiError = new ApiError("User already exists", HttpStatus.BAD_REQUEST.value());
+        if (created.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
         var createdUser = created.get();
         var getUser = new GetUser(createdUser.getId(), createdUser.getCreatedAt(), createdUser.getUpdatedAt(), createdUser.getEmail());
         return ResponseEntity
@@ -39,7 +42,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginUser user, HttpServletRequest request, HttpServletResponse response) {
-        var responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body("Email or password is incorrect");
+        var apiError = new ApiError("Email or password is incorrect", HttpStatus.BAD_REQUEST.value());
+        var responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(apiError);
         var success = authService.login(user, request, response);
         if (success) return ResponseEntity.noContent().build();
         return responseEntity;

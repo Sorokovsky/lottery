@@ -52,7 +52,6 @@ public class AuthService {
     }
 
     public boolean login(LoginUser user, HttpServletRequest request, HttpServletResponse response) {
-
         var candidate = usersService.findByEmail(user.email()).orElse(null);
         if (candidate == null) return false;
         if (!passwordEncoder.matches(user.password(), candidate.getPassword())) return false;

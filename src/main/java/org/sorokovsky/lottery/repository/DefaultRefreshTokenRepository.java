@@ -27,6 +27,7 @@ public class DefaultRefreshTokenRepository implements TokenRepository {
 
     @Override
     public Token get(HttpServletRequest request) {
+        if (request.getCookies() == null) return null;
         var rawToken = Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals(cookieName))
                 .findFirst()
