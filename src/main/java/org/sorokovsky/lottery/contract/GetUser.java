@@ -1,9 +1,17 @@
 package org.sorokovsky.lottery.contract;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public record GetUser(Long id,
-                      LocalDateTime createdAt,
-                      LocalDateTime updatedAt,
-                      String email) {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class GetUser {
+    private Long id;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String email;
 }

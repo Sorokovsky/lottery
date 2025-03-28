@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.sorokovsky.lottery.anotation.CurrentUser;
 import org.sorokovsky.lottery.contract.ApiError;
-import org.sorokovsky.lottery.contract.GetUser;
 import org.sorokovsky.lottery.contract.LoginUser;
 import org.sorokovsky.lottery.contract.RegisterUser;
 import org.sorokovsky.lottery.entity.UserEntity;
@@ -24,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
     private final UsersService usersService;
 
-    @PatchMapping("refresh-tokens")
+    @PatchMapping("/refresh-tokens")
     public ResponseEntity<?> refreshTokens(HttpServletRequest request, HttpServletResponse response) {
         var success = authService.refreshTokens(request, response);
         if (success) return ResponseEntity.noContent().build();
@@ -38,10 +37,9 @@ public class AuthController {
         var apiError = new ApiError("User already exists", HttpStatus.BAD_REQUEST.value());
         if (created.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
         var createdUser = created.get();
-        var getUser = new GetUser(createdUser.getId(), createdUser.getCreatedAt(), createdUser.getUpdatedAt(), createdUser.getEmail());
         return ResponseEntity
                 .created(URI.create("/auth/users/"))
-                .body(getUser);
+                .body(usersService.toGetUser(createdUser));
     }
 
     @PostMapping("/login")
@@ -55,6 +53,6 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<?> me(@CurrentUser UserEntity user) {
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(usersService.toGetUser(user));
     }
 }
