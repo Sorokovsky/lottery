@@ -13,13 +13,3 @@ spring:
 jwt:
   access-token-key: '{"kty": "oct", k: "lczE94iiYk8XJce4QRFFBWZdTn8xACNolczE94iiYk8XJce4QRFFBWZdTn8xACNolczE94iiYk8XJce4QRFFBWZdTn8xACNo"}'
   refresh-token-key: '{"kty": "oct", k: "lczE94iiYk8XJce4QRFFBWZdTn8xACNolczE94iiYk8XJce4QRFFBWZdTn8xACNo"}'
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
