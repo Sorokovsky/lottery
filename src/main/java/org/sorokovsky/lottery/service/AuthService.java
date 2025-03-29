@@ -13,6 +13,7 @@ import org.sorokovsky.lottery.factory.RefreshTokenRecreateFactory;
 import org.sorokovsky.lottery.repository.DefaultAccessTokenRepository;
 import org.sorokovsky.lottery.repository.DefaultRefreshTokenRepository;
 import org.sorokovsky.lottery.strategy.JwtSessionStrategy;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,8 +34,10 @@ public class AuthService {
 
     public void refreshTokens(HttpServletRequest request, HttpServletResponse response) {
         var refreshToken = refreshTokenRepository.get(request);
-        if (refreshToken == null)
+        if (refreshToken == null) {
+            response.setHeader(HttpHeaders.WWW_AUTHENTICATE, "Refresh");
             throw new ForbiddenException("Refresh token not found");
+        }
         var accessToken = accessTokenFactory.apply(refreshToken);
         accessTokenRepository.set(accessToken, response);
         var newRefreshToken = refreshTokenRecreateFactory.apply(refreshToken);
