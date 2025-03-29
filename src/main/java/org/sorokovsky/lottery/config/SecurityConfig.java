@@ -76,8 +76,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             AuthenticationManager authenticationManager,
-            DefaultAccessTokenRepository accessTokenRepository,
-            JwtSessionStrategy jwtSessionStrategy
+            DefaultAccessTokenRepository accessTokenRepository
     ) throws Exception {
         var jwtConfigurer = new JwtConfigurer(authenticationManager, accessTokenRepository);
         http.apply(jwtConfigurer);
@@ -96,8 +95,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(x -> x
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        .addSessionAuthenticationStrategy(jwtSessionStrategy)
+                        .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 )
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(new UnauthorizedEntryPoint()))
